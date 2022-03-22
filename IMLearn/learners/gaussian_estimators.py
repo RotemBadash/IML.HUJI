@@ -198,10 +198,9 @@ class MultivariateGaussian:
                              "`pdf` function")
         sqr = np.sqrt(
             ((2 * np.pi) ** self.cov_.shape[0]) * det(self.cov_))
-        sum1 = np.sum((X - self.mu_.T) @ np.linalg.inv(self.cov_) * (X -
-                                                                 self.mu_.T))
-
-        return (1 / sqr) * np.exp(-0.5 * sum1)
+        sum1 = np.sum((X - self.mu_.T) @ inv(self.cov_) * (X - self.mu_.T),
+                      axis=1)
+        return np.array((1 / sqr) * np.exp(-0.5 * sum1))
 
     @staticmethod
     def log_likelihood(mu: np.ndarray, cov: np.ndarray, X: np.ndarray) -> \
