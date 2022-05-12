@@ -7,7 +7,6 @@ class UnivariateGaussian:
     """
     Class for univariate Gaussian Distribution Estimator
     """
-
     def __init__(self, biased_var: bool = False) -> UnivariateGaussian:
         """
         Estimator for univariate Gaussian mean and variance parameters
@@ -15,8 +14,7 @@ class UnivariateGaussian:
         Parameters
         ----------
         biased_var : bool, default=True
-            Should fitted estimator of variance be a biased or unbiased
-            estimator
+            Should fitted estimator of variance be a biased or unbiased estimator
 
         Attributes
         ----------
@@ -126,7 +124,6 @@ class MultivariateGaussian:
     """
     Class for multivariate Gaussian Distribution Estimator
     """
-
     def __init__(self):
         """
         Initialize an instance of multivariate Gaussian estimator
@@ -157,12 +154,12 @@ class MultivariateGaussian:
 
         Parameters
         ----------
-        X: ndarray of shape (n_samples, )
+        X: ndarray of shape (n_samples, n_features)
             Training data
 
         Returns
         -------
-        self : returns an instance of self.
+        self : returns an instance of self
 
         Notes
         -----
@@ -181,7 +178,7 @@ class MultivariateGaussian:
 
         Parameters
         ----------
-        X: ndarray of shape (n_samples, )
+        X: ndarray of shape (n_samples, n_features)
             Samples to calculate PDF for
 
         Returns
@@ -211,17 +208,17 @@ class MultivariateGaussian:
 
         Parameters
         ----------
-        mu : float
+        mu : ndarray of shape (n_features,)
             Expectation of Gaussian
-        cov : float
+        cov : ndarray of shape (n_features, n_features)
             covariance matrix of Gaussian
-        X : ndarray of shape (n_samples, )
+        X : ndarray of shape (n_samples, n_features)
             Samples to calculate log-likelihood with
 
         Returns
         -------
         log_likelihood: float
-            log-likelihood calculated
+            log-likelihood calculated over all input data and under given parameters of Gaussian
         """
         sum1 = np.sum((X - mu.T) @ np.linalg.inv(cov) * (X - mu.T))
         cov_log = slogdet(cov)

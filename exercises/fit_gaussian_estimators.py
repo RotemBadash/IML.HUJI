@@ -7,7 +7,6 @@ pio.templates.default = "simple_white"
 
 
 def test_univariate_gaussian():
-
     # Question 1 - Draw samples and print fitted model
     x_vals = np.random.normal(10, 1, 1000)
     ug = UnivariateGaussian()
@@ -50,9 +49,9 @@ def test_multivariate_gaussian():
     # Question 4 - Draw samples and print fitted model
     mu = np.array([0, 0, 4, 0])
     sigma = np.array([[1, 0.2, 0, 0.5],
-                        [0.2, 2, 0, 0],
-                        [0, 0, 1, 0],
-                        [0.5, 0, 0, 1]])
+                      [0.2, 2, 0, 0],
+                      [0, 0, 1, 0],
+                      [0.5, 0, 0, 1]])
     x_vals = np.random.multivariate_normal(mu, sigma, 1000)
     mvg = MultivariateGaussian()
     mvg.fit(x_vals)
@@ -70,19 +69,20 @@ def test_multivariate_gaussian():
                                                        x_vals)
 
     hm = go.Figure().add_heatmap(x=space_vals, y=space_vals,
-                                     z=likelihood_vals)
+                                 z=likelihood_vals)
     hm.update_layout(title="Heatmap of calculated log-likelihood values for "
                            "models with expectation based on f1 and f3 "
                            "values",
                      xaxis_title="f3 values", yaxis_title="f1 values")
     hm.show()
 
-
     # Question 6 - Maximum likelihood
     f1, f3 = np.unravel_index(np.argmax(likelihood_vals, axis=None),
                               likelihood_vals.shape)
-    print(f"(max likelihood: {likelihood_vals[f1, f3]}, f1 value for max: "
-          f"{space_vals[f1]}, f3 value for max: {space_vals[f3]})")
+    print(f"(maximum likelihood: {likelihood_vals[f1, f3]:0.3f}, f1 value "
+          f"for maximum likelihood: {space_vals[f1]:0.3f}, f3 value for "
+          f"maximum likelihood: {space_vals[f3]:0.3f})")
+
 
 if __name__ == '__main__':
     np.random.seed(0)

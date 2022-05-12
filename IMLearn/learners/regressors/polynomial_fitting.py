@@ -19,7 +19,9 @@ class PolynomialFitting(BaseEstimator):
             Degree of polynomial to fit
         """
         super().__init__()
-        raise NotImplementedError()
+        self.degree = k
+        self.linear_regression_model = LinearRegression(
+            include_intercept=False)
 
     def _fit(self, X: np.ndarray, y: np.ndarray) -> NoReturn:
         """
@@ -33,7 +35,8 @@ class PolynomialFitting(BaseEstimator):
         y : ndarray of shape (n_samples, )
             Responses of input data to fit to
         """
-        raise NotImplementedError()
+        x = self.__transform(X)
+        self.linear_regression_model.fit(x, y)
 
     def _predict(self, X: np.ndarray) -> np.ndarray:
         """
@@ -49,7 +52,8 @@ class PolynomialFitting(BaseEstimator):
         responses : ndarray of shape (n_samples, )
             Predicted responses of given samples
         """
-        raise NotImplementedError()
+        x = self.__transform(X)
+        return self.linear_regression_model.predict(x)
 
     def _loss(self, X: np.ndarray, y: np.ndarray) -> float:
         """
@@ -68,11 +72,13 @@ class PolynomialFitting(BaseEstimator):
         loss : float
             Performance under MSE loss function
         """
-        raise NotImplementedError()
+        x = self.__transform(X)
+        return self.linear_regression_model.loss(x, y)
 
     def __transform(self, X: np.ndarray) -> np.ndarray:
         """
-        Transform given input according to the univariate polynomial transformation
+        Transform given input according to the univariate polynomial
+        transformation
 
         Parameters
         ----------
@@ -83,4 +89,4 @@ class PolynomialFitting(BaseEstimator):
         transformed: ndarray of shape (n_samples, k+1)
             Vandermonde matrix of given samples up to degree k
         """
-        raise NotImplementedError()
+        return np.vander(X, N=self.degree+1, increasing=True)

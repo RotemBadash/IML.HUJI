@@ -3,8 +3,8 @@ import numpy as np
 import pandas as pd
 
 
-def split_train_test(X: pd.DataFrame, y: pd.Series, train_proportion: float = .25) \
-        -> Tuple[pd.DataFrame, pd.Series, pd.DataFrame, pd.Series]:
+def split_train_test(X: pd.DataFrame, y: pd.Series, train_proportion: float
+= .75) -> Tuple[pd.DataFrame, pd.Series, pd.DataFrame, pd.Series]:
     """
     Split given sample to a training- and testing sample
 
@@ -33,7 +33,22 @@ def split_train_test(X: pd.DataFrame, y: pd.Series, train_proportion: float = .2
         Responses of test samples
 
     """
-    raise NotImplementedError()
+    train_size = int(np.ceil(train_proportion * X.shape[0]))
+    # test_size = X.shape[0] - train_size
+    # print(train_size, test_size)
+    # X.insert(0, "price", y)
+    # data = X.sample(frac=1)
+    # y_vals = data["price"]
+    # data.drop(["price"], axis=1, inplace=True)
+    # return data.iloc[test_size:], \
+    #        y_vals.iloc[test_size:], \
+    #        data.iloc[:test_size + 1], \
+    #        y_vals.iloc[:test_size + 1]
+    X = X.sample(frac=1)
+    y = y.reindex_like(X)
+    #
+    # n = round(train_proportion * len(y))
+    return X[:train_size], y[:train_size], X[train_size:], y[train_size:]
 
 
 def confusion_matrix(a: np.ndarray, b: np.ndarray) -> np.ndarray:
@@ -51,7 +66,8 @@ def confusion_matrix(a: np.ndarray, b: np.ndarray) -> np.ndarray:
     Returns
     -------
     confusion_matrix: ndarray of shape (a_unique_values, b_unique_values)
-        A confusion matrix where the value of the i,j index shows the number of times value `i` was found in vector `a`
-        while value `j` vas found in vector `b`
+        A confusion matrix where the value of the i,j index shows the number
+        of times value `i` was found in vector `a` while value `j` vas found in
+        vector `b`
     """
     raise NotImplementedError()
